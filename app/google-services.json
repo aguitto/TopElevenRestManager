@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "929948068482",
+    "firebase_url": "https://topelevenrestmanager.firebaseio.com",
+    "project_id": "topelevenrestmanager",
+    "storage_bucket": "topelevenrestmanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929948068482:android:de7f70811444b632",
+        "android_client_info": {
+          "package_name": "henrychuang.tw.chatheadmsg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929948068482-piumkrhutmuj5h8r1kcltk01u23ljuc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "henrychuang.tw.chatheadmsg",
+            "certificate_hash": "6437e9777b54e8a91645f3cf4fcf77a5af971f54"
+          }
+        },
+        {
+          "client_id": "929948068482-8esce1cgojdvctkgn3vmq6t8fnd3nhu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABwm0Y-CQ8V6a2MkuJ99qo9d4HSY9bk8M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929948068482-8esce1cgojdvctkgn3vmq6t8fnd3nhu1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929948068482:android:4ac8372bfb993754",
+        "android_client_info": {
+          "package_name": "com.andreaguitto.topeleven.restmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929948068482-eokqh4ue5uu29qualpdedtgtqtfhc5sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andreaguitto.topeleven.restmanager",
+            "certificate_hash": "6437e9777b54e8a91645f3cf4fcf77a5af971f54"
+          }
+        },
+        {
+          "client_id": "929948068482-8esce1cgojdvctkgn3vmq6t8fnd3nhu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABwm0Y-CQ8V6a2MkuJ99qo9d4HSY9bk8M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929948068482-8esce1cgojdvctkgn3vmq6t8fnd3nhu1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
