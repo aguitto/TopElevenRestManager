@@ -47,11 +47,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new AppListAdapter(this, data));
 
+        /*
         if (Settings.Secure.getInt(this.getContentResolver(),
                 Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1)
             githubAction.setVisibility(View.VISIBLE);
         else
             githubAction.setVisibility(View.GONE);
+        */
+        githubAction.setVisibility(View.VISIBLE);
 
         notificationPermission();
 
