@@ -20,9 +20,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.regex.Matcher;
 
-import social.chat.whatsapp.fb.messenger.messaging.Events.closeBubbleEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.CloseBubbleEvent;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationModel;
-import social.chat.whatsapp.fb.messenger.messaging.Models.replyModel;
+import social.chat.whatsapp.fb.messenger.messaging.Models.ReplyModel;
 import social.chat.whatsapp.fb.messenger.messaging.R;
 
 /**
@@ -74,9 +74,9 @@ public class DataHolder extends RecyclerView.ViewHolder {
     /**
      * bind reply message to recycler view
      *
-     * @param replymessage {@link replyModel} object
+     * @param replymessage {@link ReplyModel} object
      */
-    public void bindData2(replyModel replymessage) {
+    public void bindData2(ReplyModel replymessage) {
 
         message.setText(replymessage.getMessage());
         addClickToLinks(replymessage.getMessage());
@@ -101,7 +101,7 @@ public class DataHolder extends RecyclerView.ViewHolder {
                 @Override
                 public void onClick(View view) {
 
-                    EventBus.getDefault().post(new closeBubbleEvent());
+                    EventBus.getDefault().post(new CloseBubbleEvent());
 
                     Uri webpage = Uri.parse(url);
                     Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);

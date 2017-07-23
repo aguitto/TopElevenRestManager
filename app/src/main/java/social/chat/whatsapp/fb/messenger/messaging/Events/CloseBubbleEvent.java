@@ -2,12 +2,12 @@ package social.chat.whatsapp.fb.messenger.messaging.Events;
 
 /**
  * Created by mohak on 24/3/17.
- * Event for clearing list when the service is destroyed
+ * Event for closing the chat head in case a url is clicked
  */
 
-public class clearListEvent {
+public class CloseBubbleEvent {
 
-    public clearListEvent(){
+    public CloseBubbleEvent(){
 
         // empty constructor
     }

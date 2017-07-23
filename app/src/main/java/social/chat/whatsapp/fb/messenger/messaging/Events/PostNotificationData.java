@@ -11,10 +11,10 @@ import social.chat.whatsapp.fb.messenger.messaging.NotificationReader;
  * Event for passing {@link NotificationModel} arraylist from {@link NotificationReader} to {@link FloatingBubble}
  */
 
-public class postNotificationData {
+public class PostNotificationData {
 
     public ArrayList<NotificationModel> msgs;
-    public postNotificationData(ArrayList<NotificationModel> msgs){
+    public PostNotificationData(ArrayList<NotificationModel> msgs){
 
         this.msgs=msgs;
     }

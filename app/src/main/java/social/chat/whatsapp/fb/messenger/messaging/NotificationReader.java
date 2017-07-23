@@ -19,9 +19,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import social.chat.whatsapp.fb.messenger.messaging.Events.clearListEvent;
-import social.chat.whatsapp.fb.messenger.messaging.Events.postEvent;
-import social.chat.whatsapp.fb.messenger.messaging.Events.postNotificationData;
+import social.chat.whatsapp.fb.messenger.messaging.Events.ClearListEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostNotificationData;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationModel;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationWear;
 
@@ -139,7 +139,7 @@ public class NotificationReader extends NotificationListenerService {
         } else {
 
             Log.d(TAG, "service event");
-            EventBus.getDefault().post(new postNotificationData(msgs));
+            EventBus.getDefault().post(new PostNotificationData(msgs));
         }
 
     }
@@ -363,7 +363,7 @@ public class NotificationReader extends NotificationListenerService {
     }
 
     @Subscribe
-    public void PostWear(postEvent event) {
+    public void onConsumePostEvent(PostEvent event) {
 
         if (event.size == 1) {
             calledOnce = false;
@@ -371,12 +371,13 @@ public class NotificationReader extends NotificationListenerService {
             replied = true;
         }
 
+
         EventBus.getDefault().post(notificationWear);
 
     }
 
     @Subscribe
-    public void ClearList(clearListEvent event) {
+    public void onConsumeClearListEvent(ClearListEvent event) {
 
         if (msgs != null)
             msgs.clear();

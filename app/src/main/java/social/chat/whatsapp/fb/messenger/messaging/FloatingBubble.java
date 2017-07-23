@@ -35,18 +35,19 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import social.chat.whatsapp.fb.messenger.messaging.Adapters.CustomPagerAdapter;
 import social.chat.whatsapp.fb.messenger.messaging.Adapters.ListAdapter;
-import social.chat.whatsapp.fb.messenger.messaging.Events.clearListEvent;
-import social.chat.whatsapp.fb.messenger.messaging.Events.closeBubbleEvent;
-import social.chat.whatsapp.fb.messenger.messaging.Events.postEvent;
-import social.chat.whatsapp.fb.messenger.messaging.Events.postNotificationData;
+import social.chat.whatsapp.fb.messenger.messaging.Events.ClearListEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.CloseBubbleEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostNotificationData;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationModel;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationWear;
-import social.chat.whatsapp.fb.messenger.messaging.Models.replyModel;
+import social.chat.whatsapp.fb.messenger.messaging.Models.ReplyModel;
 
 /**
  * Created by mohak on 22/1/17.
@@ -78,7 +79,7 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
     /**
      * store user reply to chat
      */
-    ArrayList<replyModel> replyData;
+    ArrayList<ReplyModel> replyData;
     /**
      * window manager
      */
@@ -560,7 +561,7 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
 
         replyData.clear();
         isServiceRunning = false;
-        EventBus.getDefault().post(new clearListEvent());
+        EventBus.getDefault().post(new ClearListEvent());
 
         if (windowManager != null && bubbleView != null) {
             windowManager.removeView(bubbleView);
@@ -631,14 +632,14 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
 
 
     @Subscribe
-    public void getnotificationWear(NotificationWear wear) {
+    public void onConsumeNotificationWearEvent(NotificationWear wear) {
 
         notificationWear = wear;
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getNotiifcationData(postNotificationData data) {
+    public void onConsumeNotiifcationDataEvent(PostNotificationData data) {
 
         if (!isWindowAttached)
             newMessage.setVisibility(View.VISIBLE);
@@ -759,7 +760,9 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
             return;
         }
 
-        EventBus.getDefault().post(new postEvent(keys.get(pos), keys.size()));
+        // EventBus.getDefault().post(new PostEvent(keys.get(pos), keys.size()));
+
+        ensureNotificationWear();
 
         if (notificationWear == null) {
 
@@ -789,13 +792,17 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
             }
 
             if (remoteInputs[pos].getLabel().equals("Reply to " + keys.get(pos))) {
+                /*
                 notificationWear.pendingIntent.get(pos).send(FloatingBubble.this, 0, localIntent);
+                */
             } else {
 
 
                 for (int x = 0; x < remoteInputs.length; x++) {
                     if (remoteInputs[x].getLabel().equals("Reply to " + keys.get(pos))) {
+                        /*
                         notificationWear.pendingIntent.get(x).send(FloatingBubble.this, 0, localIntent);
+                        */
                         break;
                     }
                     Log.d("Lines", remoteInputs[x].getLabel().toString());
@@ -803,7 +810,7 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
 
             }
 
-            replyModel messageReply = new replyModel();
+            ReplyModel messageReply = new ReplyModel();
             messageReply.setMessage(message);
             messageReply.setKey(keys.get(pos));
             messageReply.setPos(listHashMap.get(keys.get(pos)).size());
@@ -816,18 +823,30 @@ public class FloatingBubble extends Service implements CustomPagerAdapter.Clicke
             ListAdapter adapter = (ListAdapter) ((RecyclerView) view_pager.findViewWithTag(keys.get(pos))).getAdapter();
             adapter.swap(listHashMap.get(keys.get(pos)));
 
+            EventBus.getDefault().post(new PostEvent(keys.get(pos), keys.size()));
 
-        } catch (PendingIntent.CanceledException e) {
 
+        } catch (Exception e) {
+            Log.e("Error ",e.getLocalizedMessage(), e);
 
         }
 
 
     }
 
+    private void ensureNotificationWear() {
+        if(notificationWear == null) {
+            notificationWear = new NotificationWear();
+
+            RemoteInput.Builder builder = new RemoteInput.Builder("testKey");
+            notificationWear.remoteInputs = new ArrayList<>();
+            notificationWear.remoteInputs.add(builder.setLabel("Reply to test").build());
+            notificationWear.bundle = new Bundle();
+        }
+    }
 
     @Subscribe
-    public void closeBubble(closeBubbleEvent event) {
+    public void onConsumeCloseBubbleEvent(CloseBubbleEvent event) {
 
         removeChatWindow();
     }

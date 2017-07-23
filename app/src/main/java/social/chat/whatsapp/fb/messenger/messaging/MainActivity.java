@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.RemoteInput;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,13 +18,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import social.chat.whatsapp.fb.messenger.messaging.Adapters.AppListAdapter;
-import social.chat.whatsapp.fb.messenger.messaging.Events.postNotificationData;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostEvent;
+import social.chat.whatsapp.fb.messenger.messaging.Events.PostNotificationData;
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationModel;
+import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationWear;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
+        EventBus.getDefault().register(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.appList);
         githubAction = (FloatingActionButton) findViewById(R.id.github);
@@ -98,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -190,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testUI () {
-        /**
+
+        /**tes
          * Store notifications in a list
          */
         NotificationModel model = new NotificationModel();
@@ -199,19 +213,35 @@ public class MainActivity extends AppCompatActivity {
         model.setGroup("-null_123");
         model.setTime(new Date().getTime());
 
-        ArrayList<NotificationModel> msgs = new ArrayList<>();
-        msgs.add(model);
+        botMsgs.add(model);
 
         if (!FloatingBubble.isServiceRunning) {
 
             Intent startChat = new Intent(this, FloatingBubble.class);
-            startChat.putParcelableArrayListExtra(Constants.msgs, msgs);
+            startChat.putParcelableArrayListExtra(Constants.msgs, botMsgs);
             startService(startChat);
 
         } else {
 
-            EventBus.getDefault().post(new postNotificationData(msgs));
+            EventBus.getDefault().post(new PostNotificationData(botMsgs));
         }
+    }
+
+
+    ArrayList<NotificationModel> botMsgs = new ArrayList<>();
+
+    @Subscribe
+    public void onConsumePostEvent(PostEvent event) {
+
+        Date date = new Date();
+        NotificationModel notificationModel = new NotificationModel();
+        notificationModel.setMsg("autorResponse_"+date.getTime());
+        notificationModel.setTime(date.getTime());
+        notificationModel.setUserName("test");
+        notificationModel.setGroup("-null_123");
+
+        botMsgs.add(notificationModel);
+        EventBus.getDefault().post(new PostNotificationData(botMsgs));
     }
 
 }

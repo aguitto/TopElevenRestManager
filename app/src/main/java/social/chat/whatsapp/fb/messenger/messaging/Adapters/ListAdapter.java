@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import social.chat.whatsapp.fb.messenger.messaging.Models.NotificationModel;
-import social.chat.whatsapp.fb.messenger.messaging.Models.replyModel;
+import social.chat.whatsapp.fb.messenger.messaging.Models.ReplyModel;
 import social.chat.whatsapp.fb.messenger.messaging.R;
 import social.chat.whatsapp.fb.messenger.messaging.ViewHolder.DataHolder;
 
@@ -49,14 +49,14 @@ public class ListAdapter extends RecyclerView.Adapter<DataHolder> {
     @Override
     public void onBindViewHolder(DataHolder holder, int position) {
 
-        if (data.get(position) instanceof replyModel) {
+        if (data.get(position) instanceof ReplyModel) {
 
-            replyModel currentModel = ((replyModel) data.get(position));
+            ReplyModel currentModel = ((ReplyModel) data.get(position));
             holder.bindData2(currentModel);
 
             /* check from time difference between two message*/
             if ((data.get(position - 1) instanceof NotificationModel && ((currentModel.getTime() - (((NotificationModel) data.get(position - 1)).getTime())) / (1000 * 60)) %
-                    60 >= 1) || (data.get(position - 1) instanceof replyModel && ((currentModel.getTime() - (((replyModel) data.get(position - 1)).getTime())) / (1000 * 60)) % 60 >= 1)) {
+                    60 >= 1) || (data.get(position - 1) instanceof ReplyModel && ((currentModel.getTime() - (((ReplyModel) data.get(position - 1)).getTime())) / (1000 * 60)) % 60 >= 1)) {
 
                 holder.time.setVisibility(View.VISIBLE);
                 Date date = new Date(currentModel.getTime());
@@ -74,7 +74,7 @@ public class ListAdapter extends RecyclerView.Adapter<DataHolder> {
 
             /* check from time difference between two message*/
             if (position == 0 || (data.get(position - 1) instanceof NotificationModel && ((currentModel.getTime() - (((NotificationModel) data.get(position - 1)).getTime())) / (1000 * 60)) %
-                    60 >= 1) || (data.get(position - 1) instanceof replyModel && ((currentModel.getTime() - (((replyModel) data.get(position - 1)).getTime())) / (1000 * 60)) %
+                    60 >= 1) || (data.get(position - 1) instanceof ReplyModel && ((currentModel.getTime() - (((ReplyModel) data.get(position - 1)).getTime())) / (1000 * 60)) %
                     60 >= 1)) {
 
                 holder.time.setVisibility(View.VISIBLE);

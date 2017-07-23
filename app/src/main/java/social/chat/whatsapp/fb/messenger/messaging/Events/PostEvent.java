@@ -9,12 +9,12 @@ import social.chat.whatsapp.fb.messenger.messaging.NotificationReader;
  * Event for passing {@link NotificationWear} object from {@link NotificationReader} to {@link FloatingBubble}
  */
 
-public class postEvent {
+public class PostEvent {
 
     public String receiver;
     public int size;
 
-    public postEvent(String s, int size) {
+    public PostEvent(String s, int size) {
 
         this.size = size;
         receiver = s;
